@@ -11,10 +11,11 @@ require (
 	gopkg.in/yaml.v2 v2.4.0
 )
 
+require github.com/charmbracelet/glamour v0.3.0
+
 require (
 	github.com/alecthomas/chroma v0.8.2 // indirect
 	github.com/aymerick/douceur v0.2.0 // indirect
-	github.com/charmbracelet/glamour v0.3.0 // indirect
 	github.com/cli/safeexec v1.0.0 // indirect
 	github.com/containerd/console v1.0.2 // indirect
 	github.com/danwakefield/fnmatch v0.0.0-20160403171240-cbb64ac3d964 // indirect

@@ -1,0 +1,38 @@
+{
+  "cSpell.words": [
+    "Cmds",
+    "curr",
+    "dlvhdr",
+    "Rollup",
+    "shurcooL",
+    "wslview"
+  ],
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "**/Thumbs.db": true,
+    "**/tags": true,
+    ".dccache": true,
+    ".history": true,
+    "gh-prs": true
+  },
+  "search.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "**/Thumbs.db": true,
+    "**/tags": true,
+    ".dccache": true,
+    ".history": true,
+    "gh-prs": true
+  },
+  "gopls": {
+    "build.allowModfileModifications": true
+  },
+  "go.inferGopath": false
+}

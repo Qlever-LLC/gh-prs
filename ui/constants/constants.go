@@ -11,6 +11,7 @@ type KeyMap struct {
 	Down          key.Binding
 	TogglePreview key.Binding
 	OpenGithub    key.Binding
+	Merge         key.Binding
 	Refresh       key.Binding
 	PageDown      key.Binding
 	PageUp        key.Binding
@@ -62,6 +63,10 @@ var (
 		OpenGithub: key.NewBinding(
 			key.WithKeys("o"),
 			key.WithHelp("o", "open in GitHub"),
+		),
+		Merge: key.NewBinding(
+			key.WithKeys("m"),
+			key.WithHelp("m", "merge Pull Request"),
 		),
 		Refresh: key.NewBinding(
 			key.WithKeys("r"),

@@ -13,6 +13,8 @@ import (
 	"github.com/dlvhdr/gh-prs/ui/components/tabs"
 	"github.com/dlvhdr/gh-prs/ui/context"
 	"github.com/dlvhdr/gh-prs/utils"
+
+	"github.com/dlvhdr/gh-prs/data"
 )
 
 type Model struct {
@@ -91,6 +93,12 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			currPR := m.getCurrPr()
 			if currPR != nil {
 				utils.OpenBrowser(currPR.Url)
+			}
+
+		case key.Matches(msg, m.keys.Merge):
+			currPR := m.getCurrPr()
+			if currPR != nil && currPR.Mergeable == "MERGEABLE" {
+				data.MergePullRequest(currPR.Id)
 			}
 
 		case key.Matches(msg, m.keys.Refresh):

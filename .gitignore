@@ -1,3 +1,6 @@
 debug.log
 dist
 gh-prs
+
+.dccache
+.history

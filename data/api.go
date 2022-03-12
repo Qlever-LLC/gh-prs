@@ -9,7 +9,11 @@ import (
 	graphql "github.com/cli/shurcooL-graphql"
 )
 
-type PullRequestData struct {
+type NodeFragment struct {
+	Id graphql.ID
+}
+
+type PullRequestFragment struct {
 	Number int
 	Title  string
 	Body   string
@@ -32,6 +36,11 @@ type PullRequestData struct {
 	LatestReviews Reviews  `graphql:"latestReviews(last: 3)"`
 	IsDraft       bool
 	Commits       Commits `graphql:"commits(last: 1)"`
+}
+
+type PullRequestData struct {
+	NodeFragment        `graphql:"... on Node"`
+	PullRequestFragment `graphql:"... on PullRequest"`
 }
 
 type CheckRun struct {
@@ -121,7 +130,7 @@ func FetchRepoPullRequests(query string, limit int) ([]PullRequestData, error) {
 	var queryResult struct {
 		Search struct {
 			Nodes []struct {
-				PullRequest PullRequestData `graphql:"... on PullRequest"`
+				PullRequestData
 			}
 		} `graphql:"search(type: ISSUE, first: $limit, query: $query)"`
 	}
@@ -137,7 +146,32 @@ func FetchRepoPullRequests(query string, limit int) ([]PullRequestData, error) {
 
 	prs := make([]PullRequestData, 0, len(queryResult.Search.Nodes))
 	for _, node := range queryResult.Search.Nodes {
-		prs = append(prs, node.PullRequest)
+		prs = append(prs, node.PullRequestData)
 	}
 	return prs, nil
+}
+
+func MergePullRequest(id graphql.ID) error {
+	var err error
+	client, err := gh.GQLClient(nil)
+	if err != nil {
+		log.Fatal(err)
+		return err
+	}
+
+	var queryResult struct {
+		MergePullRequest struct {
+			PullRequest PullRequestData
+		} `graphql:"mergePullRequest(input: { pullRequestId: $id })"`
+	}
+	variables := map[string]interface{}{
+		"id": id,
+	}
+	err = client.Mutate("MergePullRequest", &queryResult, variables)
+	if err != nil {
+		log.Fatal(err)
+		return err
+	}
+
+	return nil
 }
